@@ -145,5 +145,6 @@ use std::vec::Vec;
 
 mod compose;
 mod reducer;
+mod store;
 
 pub use reducer::Reducer;
