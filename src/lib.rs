@@ -143,6 +143,7 @@ use alloc::vec::Vec;
 #[cfg(feature = "std")]
 use std::vec::Vec;
 
+mod compose;
 mod middleware;
 mod reducer;
 mod store;
