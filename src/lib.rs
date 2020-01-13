@@ -144,13 +144,6 @@ use alloc::vec::Vec;
 use std::vec::Vec;
 
 mod compose;
-mod middleware;
 mod reducer;
-mod store;
-mod subscription;
 
-pub use middleware::Middleware;
 pub use reducer::Reducer;
-#[cfg(not(feature = "devtools"))]
-pub use store::Store;
-pub use subscription::Subscription;
