@@ -9,19 +9,28 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  build-tokio:
+    name: Tokio build
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Install rustfmt
-        run: rustup component add rustfmt
-      - name: Install wasm32-unknown-unknown
-        run: rustup target add wasm32-unknown-unknown
       - name: Build with tokio
         run: cargo build --no-default-features --features async_tokio,middleware_logger,middleware_thunk --verbose
+
+  build-wasm:
+    name: Wasm build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install wasm32-unknown-unknown
+        run: rustup target add wasm32-unknown-unknown
       - name: Build with wasm
         run: cargo build --no-default-features --features async_wasm,middleware_logger,middleware_thunk --target wasm32-unknown-unknown --verbose
-      - name: Run tests
+
+  test-tokio:
+    name: Run tests with tokio runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests with the tokio runtime
         run: cargo test --no-default-features --features test_async_tokio,middleware_logger,middleware_thunk --verbose
