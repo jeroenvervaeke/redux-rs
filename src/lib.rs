@@ -19,7 +19,7 @@
 //!
 //! ### State
 //!
-//! A state is the form of data that Redux manages. 
+//! A state is the form of data that Redux manages.
 //! Theoretically it could be anything, but as an example, let's consider a simple counter.
 //! The counter can only increment and decrement.
 //! The state would look like this:
@@ -160,6 +160,7 @@
 //! # }
 //! ```
 
+mod async_spawner;
 mod middleware;
 pub mod middlewares;
 mod reducer;

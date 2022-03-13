@@ -1,6 +1,5 @@
 use async_trait::async_trait;
 use std::marker::PhantomData;
-use tokio::task::JoinHandle;
 
 use crate::{
     middleware::{MiddleWare, StoreApi, StoreWithMiddleware},
@@ -21,7 +20,7 @@ where
     RootReducer: Send,
 {
     worker_address: Address<State, Action, RootReducer>,
-    _worker_handle: JoinHandle<()>,
+    _worker_handle: crate::async_spawner::SpawnResult,
 
     _types: PhantomData<RootReducer>,
 }
@@ -45,7 +44,7 @@ where
         let mut worker = StateWorker::new(root_reducer, state);
         let worker_address = worker.address();
 
-        let _worker_handle = tokio::spawn(async move {
+        let _worker_handle = crate::async_spawner::spawn(async move {
             worker.run().await;
         });
 
@@ -134,7 +133,7 @@ where
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "test_async_tokio"))]
 mod tests {
     use super::*;
     use std::sync::atomic::{AtomicI32, Ordering};

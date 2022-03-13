@@ -198,7 +198,7 @@ where
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "test_async_tokio"))]
 mod tests {
     use super::*;
     use crate::Store;

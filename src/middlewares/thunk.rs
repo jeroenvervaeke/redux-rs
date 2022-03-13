@@ -183,7 +183,7 @@ where
             ActionOrThunk::Thunk(thunk) => {
                 let api = inner.to_owned();
 
-                tokio::spawn(async move {
+                crate::async_spawner::spawn(async move {
                     thunk.execute(api).await;
                 });
             }
@@ -246,7 +246,7 @@ where
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "test_async_tokio"))]
 mod tests {
     use super::*;
     use crate::Store;
